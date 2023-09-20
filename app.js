@@ -1,5 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const multer = require("multer");
+
 const usersRouter = require("./routes/users");
 const booksRouter = require("./routes/books");
 const path = require("path");
@@ -8,29 +10,21 @@ const viewsPath = require("./utils/viewsPath");
 const { teachersModel, teacherModel } = require("./models/teacher");
 const coursesModel = require("./models/course");
 const coursesRouter = require("./routes/courses");
+const commentsModel = require("./models/comment");
+const sessionsModel = require("./models/session");
 
 require("./configs/db");
+
+const upload = multer({ dest: "uploads/" });
 
 const app = express(); // server
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", async (req, res) => {
-  const teacher = await teacherModel.findOne({
-    _id: "64be977e32a05a186b72efdb",
-  });
-
-  coursesModel.create({
-    title: "Mern Stack",
-    teacher: teacher,
-  });
-
-  res.json({
-    message: "New course added successfully :))",
-  });
-
-  // res.sendFile(path.join(viewsPath, "index.html"));
+app.post("/", upload.single("profile"), async (req, res) => {
+  console.log(req.file);
+  res.json(req.file);
 });
 
 app.get("/about", (req, res) => {

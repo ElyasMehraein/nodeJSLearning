@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { teachersSchema } = require("./teacher");
 
-const coursesModel = mongoose.model("Course", {
+const coursesSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -9,13 +9,21 @@ const coursesModel = mongoose.model("Course", {
   teacher: {
     type: teachersSchema,
   },
-  comments: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "Comment",
-    },
-  ],
 });
+
+coursesSchema.virtual("comments", {
+  ref: "Comment",
+  localField: "_id",
+  foreignField: "course",
+});
+
+coursesSchema.virtual("sessions", {
+  ref: "Session",
+  localField: "_id",
+  foreignField: "course",
+});
+
+const coursesModel = mongoose.model("Course", coursesSchema);
 
 module.exports = coursesModel;
 

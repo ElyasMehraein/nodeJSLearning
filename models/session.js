@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
-const { teachersSchema } = require("./teacher");
 
-const commentsModel = mongoose.model(
-  "Comment",
+const sessionsModel = mongoose.model(
+  "Session",
   new mongoose.Schema({
-    body: {
+    title: {
+      type: String,
+      required: true,
+    },
+    time: {
       type: String,
       required: true,
     },
@@ -15,4 +18,4 @@ const commentsModel = mongoose.model(
   })
 );
 
-module.exports = commentsModel;
+module.exports = sessionsModel;
