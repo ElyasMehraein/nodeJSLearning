@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
+const myConfig = require('../');
+require('dotenv').config()
 
-const dbUrl = "mongodb+srv://ely:NUKNQrs256pOxjYd@karbakar.jevgmsf.mongodb.net/";
+const dbUrl = process.env.MONGO_URI
+
 mongoose
   .connect(dbUrl)
   .then(() => console.log("Server Connected To DB Successfully"))

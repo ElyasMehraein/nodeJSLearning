@@ -18,6 +18,9 @@ const schema = {
   email: {
     type: "string",
   },
+  age: {
+    type: "number",
+  },
 
   password: {
     type: "string",
